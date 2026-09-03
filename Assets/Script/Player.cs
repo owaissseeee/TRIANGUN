@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
@@ -16,6 +17,9 @@ public class Player : MonoBehaviour
     private Vector2 movement;
     private Vector2 mousePos;
 
+    [Header("Juice Events")]
+    public UnityEvent onShootJuice;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -26,14 +30,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-       
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-       
         if (Input.GetMouseButtonDown(0))
         {
             Shoot();
@@ -42,13 +43,10 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        
         rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
 
-      
         Vector2 lookDir = mousePos - rb.position;
 
-        // Subtract 90 degrees assuming the default Unity triangle sprite points UP
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
         rb.rotation = angle;
     }
@@ -64,6 +62,8 @@ public class Player : MonoBehaviour
             {
                 projRb.linearVelocity = firePoint.up * projectileSpeed;
             }
+
+            onShootJuice?.Invoke();
         }
     }
 }
