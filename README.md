@@ -1,4 +1,5 @@
 # TRIANGUN
+<img width="631" height="500" alt="Picsart_26-09-05_23-16-48-299" src="https://github.com/user-attachments/assets/d1166427-4691-402b-8038-50fdb570e372" />
 
 A fast-paced, top-down 2D shooter built in Unity 6 using C#. 
 
